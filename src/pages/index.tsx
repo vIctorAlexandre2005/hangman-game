@@ -17,7 +17,7 @@ export default function Home() {
                   height={400}
                   width={400}
                   className="rounded-2xl shadow-2xl shadow-indigo-300"
-                  alt="hangme"
+                  alt="hangman"
                 />
               </div>
 
