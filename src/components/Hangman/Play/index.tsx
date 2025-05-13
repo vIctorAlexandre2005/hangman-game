@@ -1,9 +1,10 @@
 import { useHangMan } from "@/components/hooks/useHangMan";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useContextHangManData } from "@/context";
 
 export function PlayScreenHangMan() {
-  const { category, word } = useHangMan();
+  const { category, word, currentGuess, setCurrentGuess, handleGuess } = useHangMan();
   const { guessedLetters, setGuessedLetters } = useContextHangManData();
   console.log("word", word);
 
@@ -28,11 +29,14 @@ export function PlayScreenHangMan() {
           );
         })}
         <Input 
-          value={guessedLetters}
+          value={currentGuess}
           className="w-full mt-4"
-          onChange={(e) => setGuessedLetters(e.target.value.split(", ").map(letter => letter.toLowerCase()))}
+          onChange={(e) => setCurrentGuess(e.target.value)}
           maxLength={1}
         />
+        <Button onClick={handleGuess}>
+          Chutar
+        </Button>
       </div>
     </div>
   );

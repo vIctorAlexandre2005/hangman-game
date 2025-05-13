@@ -3,8 +3,16 @@ import { categorias } from "@/utils/categories";
 import { useState } from "react";
 
 export function useHangMan() {
-  const { play, setPlay, category, word, setCategory, setWord } =
-    useContextHangManData();
+  const {
+    play,
+    setPlay,
+    category,
+    word,
+    setCategory,
+    setWord,
+    guessedLetters,
+    setGuessedLetters,
+  } = useContextHangManData();
 
   function startGame() {
     const newCategory =
@@ -19,5 +27,29 @@ export function useHangMan() {
     setPlay(true);
   }
 
-  return { play, setPlay, category, word, startGame };
+  const [currentGuess, setCurrentGuess] = useState(""); // <- estado local para input
+
+  const handleGuess = () => {
+    const normalizedGuess = currentGuess.toLowerCase();
+
+    // Ignora se já foi chutada ou é vazia
+    if (normalizedGuess && !guessedLetters.includes(normalizedGuess)) {
+      setGuessedLetters([...guessedLetters, normalizedGuess]);
+    }
+
+    setCurrentGuess(""); // limpa input após chute
+  };
+
+  return {
+    play,
+    setPlay,
+    category,
+    word,
+    startGame,
+    currentGuess,
+    setCurrentGuess,
+    handleGuess,
+    guessedLetters,
+    setGuessedLetters,
+  };
 }
