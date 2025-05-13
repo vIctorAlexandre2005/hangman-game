@@ -8,6 +8,7 @@ const HangManContext = ({ children }: { children: ReactNode }) => {
   const [word, setWord] = useState<string | null>(null);
   const [play, setPlay] = useState(false);
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
+  const [currentGuess, setCurrentGuess] = useState(""); // <- estado local para input
 
 
   return (
@@ -21,6 +22,8 @@ const HangManContext = ({ children }: { children: ReactNode }) => {
         word,
         guessedLetters,
         setGuessedLetters,
+        currentGuess,
+        setCurrentGuess,
       }}
     >
       {children}

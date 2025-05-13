@@ -4,9 +4,11 @@ import { Input } from "@/components/ui/input";
 import { useContextHangManData } from "@/context";
 
 export function PlayScreenHangMan() {
-  const { category, word, currentGuess, setCurrentGuess, handleGuess } = useHangMan();
+  const { category, word, currentGuess, setCurrentGuess, handleGuess, wrongGuesses, correctGuesses } = useHangMan();
   const { guessedLetters, setGuessedLetters } = useContextHangManData();
-  console.log("word", word);
+  console.log("wrongGuesses", wrongGuesses);
+  console.log("correctGuesses", correctGuesses);
+  console.log("currentGuess", currentGuess);
 
   return (
     <div>

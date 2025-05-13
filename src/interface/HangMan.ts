@@ -14,6 +14,8 @@ export interface HangManProps {
    setWord: Dispatch<SetStateAction<string | null>>;
    guessedLetters: string[];
    setGuessedLetters: Dispatch<SetStateAction<string[]>>;
+   currentGuess: string;
+   setCurrentGuess: Dispatch<SetStateAction<string>>;
 }
 
 export const defaultValueHangManProps: HangManProps = {
@@ -25,4 +27,6 @@ export const defaultValueHangManProps: HangManProps = {
    setWord: () => {},
    guessedLetters: [],
    setGuessedLetters: () => {},
+   currentGuess: '',
+   setCurrentGuess: () => {},
 };

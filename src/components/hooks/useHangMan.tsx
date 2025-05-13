@@ -12,7 +12,12 @@ export function useHangMan() {
     setWord,
     guessedLetters,
     setGuessedLetters,
+    currentGuess,
+    setCurrentGuess,
   } = useContextHangManData();
+
+  const [wrongGuesses, setWrongGuesses] = useState<string[]>([]);
+  const [correctGuesses, setCorrectGuesses] = useState<string[]>([]);
 
   function startGame() {
     const newCategory =
@@ -25,16 +30,26 @@ export function useHangMan() {
     setCategory(newCategory);
     setWord(newWord);
     setPlay(true);
-  }
-
-  const [currentGuess, setCurrentGuess] = useState(""); // <- estado local para input
+  };
 
   const handleGuess = () => {
     const normalizedGuess = currentGuess.toLowerCase();
 
-    // Ignora se já foi chutada ou é vazia
-    if (normalizedGuess && !guessedLetters.includes(normalizedGuess)) {
-      setGuessedLetters([...guessedLetters, normalizedGuess]);
+    if (
+      !word || correctGuesses.includes(normalizedGuess) ||
+      wrongGuesses.includes(normalizedGuess)
+    ) {
+      setCurrentGuess("");
+      return;
+    }
+
+    setGuessedLetters([...guessedLetters, normalizedGuess]);
+
+    if (word.includes(normalizedGuess)) {
+      // Se a letra está na palavra, não faz nada
+      setCorrectGuesses([...guessedLetters, normalizedGuess]);
+    } else {
+      setWrongGuesses([...wrongGuesses, normalizedGuess]);
     }
 
     setCurrentGuess(""); // limpa input após chute
@@ -51,5 +66,9 @@ export function useHangMan() {
     handleGuess,
     guessedLetters,
     setGuessedLetters,
+    correctGuesses,
+    setCorrectGuesses,
+    wrongGuesses,
+    setWrongGuesses,
   };
-}
+};
