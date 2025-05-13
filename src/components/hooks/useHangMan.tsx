@@ -3,25 +3,21 @@ import { categorias } from "@/utils/categories";
 import { useState } from "react";
 
 export function useHangMan() {
-  const { play, setPlay } = useContextHangManData();
+  const { play, setPlay, category, word, setCategory, setWord } =
+    useContextHangManData();
 
-    function randomChooseCategory() {
-        const result = categorias[Math.floor(Math.random() * categorias.length)];
-        console.log(result);
-        return result;
-    };
+  function startGame() {
+    const newCategory =
+      categorias[Math.floor(Math.random() * categorias.length)];
+    const newWord =
+      newCategory.palavras[
+        Math.floor(Math.random() * newCategory.palavras.length)
+      ];
 
-    const randomCategory = randomChooseCategory();
-    function randomChooseWord() {
-        const words = randomCategory.palavras;
-        const result = words[Math.floor(Math.random() * words.length)];
-        console.log(result);
-        return result;
-    }
-    const randomWord = randomChooseWord();
-    console.log(randomCategory);
-    console.log(randomWord);
+    setCategory(newCategory);
+    setWord(newWord);
+    setPlay(true);
+  }
 
-
-  return { play, setPlay, randomCategory, randomWord };
+  return { play, setPlay, category, word, startGame };
 }

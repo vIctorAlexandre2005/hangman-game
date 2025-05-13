@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useContextHangManData } from "@/context";
 
 export function MainScreenHangMan() {
-  const { play, setPlay } = useContextHangManData();
+  const { startGame } = useHangMan();
   return (
     <div className="flex gap-4 w-full justify-between items-center">
       <div className="w-1/2 flex justify-center">
@@ -28,7 +28,7 @@ export function MainScreenHangMan() {
         </div>
         <Button
           className="w-full shadow-2xl hover:shadow-fuchsia-500 transition duration-300 hover:bg-gradient-to-r from-pink-500 to-indigo-500 text-lg p-6 cursor-pointer"
-          onClick={() => setPlay(true)}
+          onClick={startGame}
         >
           BORA JOGAR
         </Button>

@@ -1,45 +1,39 @@
 import { useHangMan } from "@/components/hooks/useHangMan";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useContextHangManData } from "@/context";
 
 export function PlayScreenHangMan() {
-  const { randomCategory, randomWord } = useHangMan();
-  const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
-  const [inputLetter, setInputLetter] = useState("");
+  const { category, word } = useHangMan();
+  const { guessedLetters, setGuessedLetters } = useContextHangManData();
+  console.log("word", word);
 
-  const handleGuess = () => {
-    const letter = inputLetter.toLowerCase();
-
-    if (letter && !guessedLetters.includes(letter)) {
-      setGuessedLetters([...guessedLetters, letter]);
-    }
-
-    setInputLetter(""); // Limpa o input
-  };
   return (
     <div>
-      <h1>Categoria: {randomCategory.categoria}</h1>
-      {randomWord.split("").map((char, idx) => (
-        <div
-          className={`w-10 h-10 border text-center border-black inline-block ${guessedLetters.includes(char.toLowerCase()) ? "bg-gray-300" : ""}`}
-          key={idx}
-        >
-          {char.toUpperCase()}
-        </div>
-      ))}
-      <Input
-        value={inputLetter}
-        onChange={(e) => setInputLetter(e.target.value)}
-        maxLength={1}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleGuess();
-          }
-        }}
-        className="w-10 h-10 border text-center border-black inline-block"
-      />
-      <Button onClick={handleGuess}>Adivinhar</Button>
+      <h1>Categoria: {category && category.categoria}</h1>
+      <div className="flex">
+        {word?.split("").map((char, index) => {
+          const isGuessed = guessedLetters.includes(char.toLowerCase());
+
+          return (
+            <div
+              key={index}
+              className={`w-10 h-10 border border-black inline-flex items-center justify-center text-xl font-bold ${
+                isGuessed
+                  ? "bg-white text-black"
+                  : "bg-gray-300 text-transparent"
+              }`}
+            >
+              {char.toUpperCase()}
+            </div>
+          );
+        })}
+        <Input 
+          value={guessedLetters}
+          className="w-full mt-4"
+          onChange={(e) => setGuessedLetters(e.target.value.split(", ").map(letter => letter.toLowerCase()))}
+          maxLength={1}
+        />
+      </div>
     </div>
   );
 }
