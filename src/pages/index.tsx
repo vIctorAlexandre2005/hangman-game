@@ -10,8 +10,8 @@ export default function Home() {
   return (
     <div className="h-screen w-full bg-gradient-to-r from-indigo-500 to-pink-500 animate-gradient">
       <div className="fixed w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-        <div className="w-full flex items-center justify-center">
-          <Card className="w-2/3 p-4 shadow-2xl">
+        <div className="w-full flex items-center p-4 justify-center">
+          <Card className="max-sm:w-11/12 min-sm:w-2/3 p-4 shadow-2xl">
             <h1 className="text-4xl text-center bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text">
               HangMan
             </h1>
