@@ -10,28 +10,27 @@ export function PlayScreenHangMan() {
     currentGuess,
     setCurrentGuess,
     handleGuess,
-    wrongGuesses,
+    incorrectGuesses,
+    duplicateGuess,
     correctGuesses,
-    wrongCount,
-    thereIsNoChances,
-    isGameOver,
-    winner,
-    letterGuessed,
+    remainingAttempts,
+    noChancesLeft,
+    gameOver,
+    gameWon,
+    guessedLetters,
   } = useHangMan();
-  const { guessedLetters } = useContextHangManData();
-  const sameWord =
-    correctGuesses.includes(currentGuess) ||
-    wrongGuesses.includes(currentGuess);
+
+  console.log('word', word);
 
   return (
     <div>
       <div className="min-sm:flex max-sm:flex-col justify-between items-center">
         <h1>Categoria: {category && category.categoria}</h1>
-        {wrongCount > 0 && <h1>Tentativas restantes: {wrongCount}</h1>}
-        {letterGuessed && <h1 className="text-red-500">Letra já chutada</h1>}
-        {thereIsNoChances && <h1 className="text-red-500">Você não tem mais chances! Chute a palavra inteira</h1>}
-        {winner && <h1 className="text-green-500">Parabéns! Você ganhou!</h1>}
-        {isGameOver && (
+        {remainingAttempts > 0 && <h1>Tentativas restantes: {remainingAttempts}</h1>}
+        {duplicateGuess && <h1 className="text-red-500">Letra já chutada</h1>}
+        {noChancesLeft && <h1 className="text-red-500">Você não tem mais chances! Chute a palavra inteira</h1>}
+        {gameWon && <h1 className="text-green-500">Parabéns! Você ganhou! 🎉🎉</h1>}
+        {gameOver && (
           <h1 className="text-red-500">Você perdeu! A palavra era: {word}</h1>
         )}
       </div>
@@ -43,8 +42,8 @@ export function PlayScreenHangMan() {
               <div
                 key={index}
                 className={`w-10 h-10 border border-black inline-flex items-center justify-center text-xl font-bold ${
-                  isGuessed || winner || isGameOver
-                    ? `bg-white ${isGameOver ? "text-red-500" : "text-black"}`
+                  isGuessed || gameWon || gameOver
+                    ? `bg-white ${gameOver ? "text-red-500" : "text-black"}`
                     : "bg-gray-300 text-transparent"
                 }`}
               >
@@ -58,17 +57,17 @@ export function PlayScreenHangMan() {
             value={currentGuess}
             className="min-sm:w-1/2 max-sm:w-full border-purple-500"
             onChange={(e) => setCurrentGuess(e.target.value)}
-            maxLength={thereIsNoChances ? 100 : 1}
+            maxLength={noChancesLeft ? 100 : 1}
           />
           <Button
             className="font-light text-sm"
             onClick={() =>
-              winner || isGameOver ? window.location.reload() : handleGuess()
+              gameWon || gameOver ? window.location.reload() : handleGuess()
             }
           >
-            {winner
+            {gameWon
               ? "Ganhar novamente!"
-              : isGameOver
+              : gameOver
               ? "Ganhar a próxima!"
               : "Chutar"}
           </Button>
