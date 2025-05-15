@@ -43,8 +43,8 @@ export function PlayScreenHangMan() {
                 key={index}
                 className={`w-10 h-10 border border-black inline-flex items-center justify-center text-xl font-bold ${
                   isGuessed || gameWon || gameOver
-                    ? `bg-white ${gameOver ? "text-red-500" : "text-black"}`
-                    : "bg-gray-300 text-transparent"
+                    ? `bg-white ${gameOver ? "text-red-500" : "text-indigo-500"}`
+                    : "bg-transparent text-transparent"
                 }`}
               >
                 {char.toUpperCase()}
