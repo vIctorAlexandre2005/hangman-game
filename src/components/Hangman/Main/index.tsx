@@ -9,8 +9,12 @@ export function MainScreenHangMan() {
       <div className="min-sm:w-1/2 max-sm:w-full flex justify-center">
         <img
           src="/hangman_ofc.jpg"
-          
-          className="rounded-2xl shadow-2xl shadow-indigo-300 min-sm:h-96 min-sm:w-96 max-sm:h-96 max-sm:w-96 max-sm:mb-10"
+          className="rounded-2xl shadow-2xl shadow-indigo-300
+            max-sm:h-72 
+            max-sm:w-72
+            min-sm:h-11/12 min-sm:w-11/12
+            min-md:h-9/12 min-md:w-9/12  
+            max-sm:mb-10"
           alt="hangman"
         />
       </div>

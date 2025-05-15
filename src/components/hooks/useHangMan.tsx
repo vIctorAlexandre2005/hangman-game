@@ -16,70 +16,77 @@ export function useHangMan() {
     setCurrentGuess,
   } = useContextHangManData();
 
-  const [wrongGuesses, setWrongGuesses] = useState<string[]>([]);
+  const [incorrectGuesses, setIncorrectGuesses] = useState<string[]>([]);
   const [correctGuesses, setCorrectGuesses] = useState<string[]>([]);
-  const [wrongCount, setWrongCount] = useState<number>(5);
-  const [thereIsNoChances, setThereIsNoChances] = useState(false);
-  const [winner, setWinner] = useState(false);
-  const [isGameOver, setIsGameOver] = useState(false);
-  const [letterGuessed, setLetterGuessed] = useState<boolean>(false);
+  const [remainingAttempts, setRemainingAttempts] = useState<number>(5);
+  const [noChancesLeft, setNoChancesLeft] = useState(false);
+  const [gameWon, setGameWon] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [duplicateGuess, setDuplicateGuess] = useState<boolean>(false);
 
   function startGame() {
-    const newCategory =
+    const selectedCategory =
       categorias[Math.floor(Math.random() * categorias.length)];
-    const newWord =
-      newCategory.palavras[
-        Math.floor(Math.random() * newCategory.palavras.length)
-      ];
+    const chosenWord =
+      selectedCategory.palavras[Math.floor(Math.random() * selectedCategory.palavras.length)];
 
-    setCategory(newCategory);
-    setWord(newWord);
+    setCategory(selectedCategory);
+    setWord(chosenWord);
     setPlay(true);
   }
 
   function handleGuess() {
-    const normalizedGuess = currentGuess.toLowerCase();
+    const guess = currentGuess.toLowerCase();
 
     if (
       !word ||
-      correctGuesses.includes(normalizedGuess) ||
-      wrongGuesses.includes(normalizedGuess)
+      correctGuesses.includes(guess) ||
+      incorrectGuesses.includes(guess)
     ) {
-      setLetterGuessed(true);
+      setDuplicateGuess(true);
       setCurrentGuess("");
       return;
-    };
-    setLetterGuessed(false);
-    setGuessedLetters([...guessedLetters, normalizedGuess]);
+    }
+    setDuplicateGuess(false);
+    setGuessedLetters([...guessedLetters, guess]);
 
-    if (word.includes(normalizedGuess)) {
-      setCorrectGuesses([...correctGuesses, normalizedGuess]); // se a letra está na palavra, adiciona à lista de letras corretas
+    if (word.includes(guess)) {
+      const updatedCorrectGuesses = [...correctGuesses, guess];
+      setCorrectGuesses(updatedCorrectGuesses);
+
+      const uniqueWordLetters = [...new Set(word.toLowerCase().split(""))];
+      const allLettersGuessed = uniqueWordLetters.every((letter) =>
+        updatedCorrectGuesses.includes(letter)
+      );
+
+      if (allLettersGuessed && !noChancesLeft) {
+        setGameWon(true);
+        return;
+      }
     } else {
-      setWrongGuesses([...wrongGuesses, normalizedGuess]); // se a letra não está na palavra, adiciona à lista de letras erradas
-      setWrongCount(wrongCount - 1); // decrementa o número de tentativas restantes
+      setIncorrectGuesses([...incorrectGuesses, guess]);
+      setRemainingAttempts(remainingAttempts - 1);
     }
 
-    if (wrongCount <= 1) {
-      setThereIsNoChances(true);
+    if (remainingAttempts <= 1) {
+      setNoChancesLeft(true);
     }
 
-    // Fase de chutes
-    if (normalizedGuess === word && thereIsNoChances) {
-      console.log("Você acertou a palavra!");
-      setThereIsNoChances(false);
-      setWinner(true);
+    if (guess === word && noChancesLeft) {
+      setNoChancesLeft(false);
+      setGameWon(true);
       return;
     }
 
-    if (normalizedGuess !== word && thereIsNoChances) {
-      setThereIsNoChances(false);
-      setIsGameOver(true);
+    if (guess !== word && noChancesLeft) {
+      setNoChancesLeft(false);
+      setGameOver(true);
       return;
-    };
+    }
 
-    setWrongCount(wrongCount - 1);
-    setCurrentGuess(""); // limpa input após chute
-  };
+    setRemainingAttempts(remainingAttempts - 1);
+    setCurrentGuess("");
+  }
 
   return {
     play,
@@ -94,15 +101,15 @@ export function useHangMan() {
     setGuessedLetters,
     correctGuesses,
     setCorrectGuesses,
-    wrongGuesses,
-    setWrongGuesses,
-    wrongCount,
-    setWrongCount,
-    thereIsNoChances,
-    setThereIsNoChances,
-    winner,
-    setWinner,
-    isGameOver,
-    letterGuessed,
+    incorrectGuesses,
+    setIncorrectGuesses,
+    remainingAttempts,
+    setRemainingAttempts,
+    noChancesLeft,
+    setNoChancesLeft,
+    gameWon,
+    setGameWon,
+    gameOver,
+    duplicateGuess,
   };
 }
