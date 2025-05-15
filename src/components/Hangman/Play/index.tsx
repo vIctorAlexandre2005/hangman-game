@@ -20,8 +20,6 @@ export function PlayScreenHangMan() {
     guessedLetters,
   } = useHangMan();
 
-  console.log('word', word);
-
   return (
     <div>
       <div className="min-sm:flex max-sm:flex-col justify-between items-center">
