@@ -3,15 +3,19 @@ import { PlayScreenHangMan } from "@/components/Hangman/Play";
 import { useHangMan } from "@/components/hooks/useHangMan";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
+  const renderCount = useRef(0);
+  renderCount.current += 1;
+  console.log("Esse componente foi renderizado", renderCount.current, "vezes");
   const { play } = useHangMan();
   return (
     <div className="h-screen w-full bg-gradient-to-r from-indigo-500 to-pink-500 animate-gradient">
       <div className="fixed w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform">
         <div className="w-full flex items-center p-4 justify-center">
-          <Card className="
+          <Card
+            className="
             p-4 shadow-2xl
             max-sm:w-full 
             min-sm:w-full 
@@ -20,7 +24,7 @@ export default function Home() {
             "
           >
             <h1 className="text-4xl text-center bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text">
-              HangMan
+              Letra Fatal
             </h1>
             {play ? <PlayScreenHangMan /> : <MainScreenHangMan />}
           </Card>
