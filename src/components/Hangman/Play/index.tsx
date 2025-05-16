@@ -1,7 +1,6 @@
 import { useHangMan } from "@/components/hooks/useHangMan";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useContextHangManData } from "@/context";
 
 export function PlayScreenHangMan() {
   const {
@@ -10,9 +9,7 @@ export function PlayScreenHangMan() {
     currentGuess,
     setCurrentGuess,
     handleGuess,
-    incorrectGuesses,
     duplicateGuess,
-    correctGuesses,
     remainingAttempts,
     noChancesLeft,
     gameOver,

@@ -16,6 +16,20 @@ export interface HangManProps {
    setGuessedLetters: Dispatch<SetStateAction<string[]>>;
    currentGuess: string;
    setCurrentGuess: Dispatch<SetStateAction<string>>;
+   incorrectGuesses: string[];
+   setIncorrectGuesses: Dispatch<SetStateAction<string[]>>;
+   correctGuesses: string[];
+   setCorrectGuesses: Dispatch<SetStateAction<string[]>>;
+   remainingAttempts: number;
+   setRemainingAttempts: Dispatch<SetStateAction<number>>;
+   noChancesLeft: boolean;
+   setNoChancesLeft: Dispatch<SetStateAction<boolean>>;
+   gameWon: boolean;
+   setGameWon: Dispatch<SetStateAction<boolean>>;
+   gameOver: boolean;
+   setGameOver: Dispatch<SetStateAction<boolean>>;
+   duplicateGuess: boolean;
+   setDuplicateGuess: Dispatch<SetStateAction<boolean>>;
 }
 
 export const defaultValueHangManProps: HangManProps = {
@@ -29,4 +43,18 @@ export const defaultValueHangManProps: HangManProps = {
    setGuessedLetters: () => {},
    currentGuess: '',
    setCurrentGuess: () => {},
+   incorrectGuesses: [],
+   setIncorrectGuesses: () => {},
+   correctGuesses: [],
+   setCorrectGuesses: () => {},
+   remainingAttempts: 5,
+   setRemainingAttempts: () => {},
+   noChancesLeft: false,
+   setNoChancesLeft: () => {},
+   gameWon: false,
+   setGameWon: () => {},
+   gameOver: false,
+   setGameOver: () => {},
+   duplicateGuess: false,
+   setDuplicateGuess: () => {},
 };

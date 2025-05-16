@@ -14,21 +14,29 @@ export function useHangMan() {
     setGuessedLetters,
     currentGuess,
     setCurrentGuess,
+    incorrectGuesses,
+    setIncorrectGuesses,
+    correctGuesses,
+    setCorrectGuesses,
+    remainingAttempts,
+    setRemainingAttempts,
+    noChancesLeft,
+    setNoChancesLeft,
+    gameWon,
+    setGameWon,
+    gameOver,
+    setGameOver,
+    duplicateGuess,
+    setDuplicateGuess,
   } = useContextHangManData();
-
-  const [incorrectGuesses, setIncorrectGuesses] = useState<string[]>([]);
-  const [correctGuesses, setCorrectGuesses] = useState<string[]>([]);
-  const [remainingAttempts, setRemainingAttempts] = useState<number>(5);
-  const [noChancesLeft, setNoChancesLeft] = useState(false);
-  const [gameWon, setGameWon] = useState(false);
-  const [gameOver, setGameOver] = useState(false);
-  const [duplicateGuess, setDuplicateGuess] = useState<boolean>(false);
 
   function startGame() {
     const selectedCategory =
       categorias[Math.floor(Math.random() * categorias.length)];
     const chosenWord =
-      selectedCategory.palavras[Math.floor(Math.random() * selectedCategory.palavras.length)];
+      selectedCategory.palavras[
+        Math.floor(Math.random() * selectedCategory.palavras.length)
+      ];
 
     setCategory(selectedCategory);
     setWord(chosenWord);
@@ -110,6 +118,8 @@ export function useHangMan() {
     gameWon,
     setGameWon,
     gameOver,
+    setGameOver,
     duplicateGuess,
+    setDuplicateGuess,
   };
 }
